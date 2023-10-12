@@ -23,6 +23,9 @@ model User {
   updatedAt        DateTime          @updatedAt
   reviewAndRatings ReviewAndRating[]
   bookings         Booking[]
+  feedBacks        FeedBack[]
+  blogs            Blog[]
+  addToCarts       AddToCart[]
 
   @@map("users")
 }
@@ -37,6 +40,8 @@ model Service {
   updatedAt        DateTime          @updatedAt
   reviewAndRatings ReviewAndRating[]
   bookings         Booking[]
+  addToCarts       AddToCart[]
+  feedBacks        FeedBack[]
 
   @@map("services")
 }
@@ -69,4 +74,54 @@ model Booking {
   service Service @relation(fields: [serviceId], references: [id])
 
   @@map("bookings")
+}
+
+model FeedBack {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  serviceId  String
+  service    Service  @relation(fields: [serviceId], references: [id])
+  comments   String
+  suggestion String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("feed-back")
+}
+
+model Blog {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  thumnail  String
+  published Boolean
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+
+  @@map("blogs")
+}
+
+model FAQ {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("faqs")
+}
+
+model AddToCart {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("add-to-cart")
 }
