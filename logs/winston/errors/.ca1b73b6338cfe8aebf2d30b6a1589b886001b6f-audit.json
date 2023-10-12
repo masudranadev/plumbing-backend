@@ -1,0 +1,95 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\.ca1b73b6338cfe8aebf2d30b6a1589b886001b6f-audit.json",
+    "files": [
+        {
+            "date": 1693557570144,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-14-error.log",
+            "hash": "60096d06d9e27af3ff415fabf4cffabbedece3ca362a247853d17f1c556e9fa1"
+        },
+        {
+            "date": 1693558807022,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-15-error.log",
+            "hash": "1ca9a9f9c7158fc3e31fd7a5fbbb6c21d79558b882a6a704c34a5b1848dcfcb3"
+        },
+        {
+            "date": 1693562557847,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-16-error.log",
+            "hash": "a0baf0ce649ee7f6620ee72ad191aa274c28ccfbc5a373a5e3e9507e71962c41"
+        },
+        {
+            "date": 1693567398009,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-17-error.log",
+            "hash": "3953de509591e111bbebfaab32b86ad149b0d2afbca1ff3f3b5c15e3fd8983ab"
+        },
+        {
+            "date": 1693569603069,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-18-error.log",
+            "hash": "2264c82bc42aebb079707b2c82e8a3a346e8be271abce93b71b957ed8585699c"
+        },
+        {
+            "date": 1693573202423,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-19-error.log",
+            "hash": "84c71b80b907d42015efe28e0f85c7c8ccf97f51f3763f0aadd51613310ca590"
+        },
+        {
+            "date": 1693583231175,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-21-error.log",
+            "hash": "c067def640dca33653e1b7df14d3fa2bbe679a068ffa6dcd863ae9b800ad3764"
+        },
+        {
+            "date": 1693584001100,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-22-error.log",
+            "hash": "08905daffba08d7393bb6f400d84266b65d9d5d08055f4909bcd2b5abcc85088"
+        },
+        {
+            "date": 1693587622119,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-01-09-23-error.log",
+            "hash": "bb7ee45fc3d31a5b4a7c65852de5c3cb809fceb656a26ce4dbdbaeb0e8415fa2"
+        },
+        {
+            "date": 1693591207537,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-00-error.log",
+            "hash": "f4e358cf1c093bedc8fe8b2774a34e9bf381583c0cdb86d0c4e251ca8adecc91"
+        },
+        {
+            "date": 1693620515615,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-08-error.log",
+            "hash": "56b49cd9b27f2644eefc13caacf19a23cb9216495deda5f91dd69bfd6ef4b90f"
+        },
+        {
+            "date": 1693624038786,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-09-error.log",
+            "hash": "585406eb84706fc695212973c91288e6b61a7f99887005a4d258b50712c56f3f"
+        },
+        {
+            "date": 1693627201446,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-10-error.log",
+            "hash": "495dee88b11ff76b9b309ffb83c9a120bd3c9751c120c126948e534ad31ef68f"
+        },
+        {
+            "date": 1693631007823,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-11-error.log",
+            "hash": "16db67c9648d8773880799d0006c2611c67502e0db2e6589734eb60fc555e60a"
+        },
+        {
+            "date": 1693635591906,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-12-error.log",
+            "hash": "a01abc7da001b39b46003439d5159b2d084adea9e103be7bec02ac374ce47c13"
+        },
+        {
+            "date": 1693638031732,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-13-error.log",
+            "hash": "aeeabbb2dd178893dc5b8e573f05957a3f763e63daed12394513294ec69f2b04"
+        },
+        {
+            "date": 1693642360521,
+            "name": "D:\\next-level\\mission-6\\assignment-8\\book-catalog-backend\\logs\\winston\\errors\\phu-2023-02-09-14-error.log",
+            "hash": "cb503936ba5c5a3ab27e8d55a03dd7903e91f2cd015d66404c76feeabb3eaee7"
+        }
+    ],
+    "hashType": "sha256"
+}
