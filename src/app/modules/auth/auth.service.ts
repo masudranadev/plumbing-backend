@@ -35,9 +35,9 @@ const signin = async (payload: ISigninData): Promise<ISigninResponse> => {
     throw new ApiError(httpStatus.UNAUTHORIZED, "password doesn't match");
   }
 
-  const { id: userId, role } = isUserExist;
+  const { id: userId, email: userEmail, role } = isUserExist;
   const accessToken = jwtHelpers.createToken(
-    { userId, role },
+    { userId, userEmail, role },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string
   );
