@@ -1,9 +1,9 @@
 import express from 'express';
 import { AuthRoutes } from '../modules/auth/auth.routes';
-import { CategoryRoutes } from '../modules/category/category.routes';
+import { ReviewAndRatingRoutes } from '../modules/reviewAndRating/reviewAndRating.routes';
 import { UserRoutes } from '../modules/user/user.routes';
 import { ServiceRoutes } from '../modules/service/service.routes';
-import { OrderRoutes } from '../modules/order/order.routes';
+import { BookingRoutes} from '../modules/booking/booking.routes';
 import { ProfileRoutes } from '../modules/profile/profile.routes';
 
 const router = express.Router();
@@ -19,16 +19,16 @@ const moduleRoutes = [
     route: UserRoutes,
   },
   {
-    path: '/categories',
-    route: CategoryRoutes,
+    path: '/reviewAndRating',
+    route: ReviewAndRatingRoutes,
   },
   {
     path: '/services',
     route: ServiceRoutes,
   },
   {
-    path: '/orders',
-    route: OrderRoutes,
+    path: '/bookings',
+    route: BookingRoutes,
   },
   {
     path: '/profile',

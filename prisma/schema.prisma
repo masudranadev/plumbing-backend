@@ -22,7 +22,7 @@ model User {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   reviewAndRatings ReviewAndRating[]
-  Order            Order[]
+  bookings         Booking[]
 
   @@map("users")
 }
@@ -36,16 +36,19 @@ model Service {
   createdAt        DateTime          @default(now())
   updatedAt        DateTime          @updatedAt
   reviewAndRatings ReviewAndRating[]
+  bookings         Booking[]
 
   @@map("services")
 }
 
 model ReviewAndRating {
-  id        String @id @default(uuid())
+  id        String   @id @default(uuid())
   review    String
   rating    Int
   userId    String
   serviceId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   user    User    @relation(fields: [userId], references: [id])
   service Service @relation(fields: [serviceId], references: [id])
@@ -53,15 +56,17 @@ model ReviewAndRating {
   @@map("review_and_ratings")
 }
 
-model Order {
-  id           String   @id @default(uuid())
-  userId       String
-  orderedBooks Json
-  status       String?  @default("pending")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+model Booking {
+  id        String   @id @default(uuid())
+  userId    String
+  serviceId String
+  status    String?  @default("pending")
+  date      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
 
-  @@map("orders")
+  @@map("bookings")
 }
