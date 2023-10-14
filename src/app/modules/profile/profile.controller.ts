@@ -5,9 +5,10 @@ import sendResponse from '../../../shared/sendResponse';
 import { ProfileService } from './profile.service';
 
 const myProfile = catchAsync(async (req: Request, res: Response) => {
-  const token = req.headers.authorization as string;
 
-  const result = await ProfileService.myProfile(token);
+  
+  // const token = req.headers.authorization as string;
+  const result = await ProfileService.myProfile(req.params.userId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
