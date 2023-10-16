@@ -16,6 +16,7 @@ import {
   bookingSearchableFields,
 } from './booking.constants';
 import { IBookedFilterRequest } from './booking.interface';
+import { ENUM_USER_ROLE } from '../../../enums/user';
 
 const insertIntoDB = async (token: string, data: Booking): Promise<Booking> => {
   const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
@@ -133,6 +134,19 @@ const getBookings = async (
   };
 };
 
+const deleteBooking = async (
+  id: string,
+): Promise<Booking | null> => {
+
+  const result = await prisma.booking.delete({
+    where: { id },
+    include: {
+      user: true,
+      service: true,
+    },
+  });
+  return result;
+};
 const getBooking = async (
   id: string,
   token: string
@@ -169,7 +183,7 @@ const updateBooking = async (
     throw new ApiError(httpStatus.NOT_FOUND, "service doesn't exist!");
   }
 
-  if (user.role === 'admin') {
+  if (user.role === ENUM_USER_ROLE.ADMIN || user.role === ENUM_USER_ROLE.SUPER_ADMIN) {
     const result = await prisma.booking.update({
       where: {
         id,
@@ -193,5 +207,6 @@ export const BookingService = {
   getBooking,
   getBookings,
   insertIntoDB,
+  deleteBooking,
   updateBooking,
 };

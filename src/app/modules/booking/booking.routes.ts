@@ -20,8 +20,13 @@ router.get(
 );
 router.patch(
   '/:bookingId',
-  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.ADMIN,ENUM_USER_ROLE.SUPER_ADMIN),
   BookingController.updateBooking
+);
+router.delete(
+  '/:bookingId',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.USER),
+  BookingController.deleteBooking
 );
 
 router.post(
