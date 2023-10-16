@@ -47,6 +47,8 @@ const insertIntoDB = async (
 
 const getAddToCarts = async (token: string): Promise<AddToCart[]> => {
   const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+  console.log(user);
+  
 
   const isExist = await prisma.user.findFirst({
     where: {
@@ -57,17 +59,28 @@ const getAddToCarts = async (token: string): Promise<AddToCart[]> => {
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, "user doesn't exist!");
   }
-  
-  const result = await prisma.addToCart.findMany({
-    where: {
-      userId: user.userId,
-    },
-    include: {
-      user: true,
-      service: true,
-    },
-  });
-  return result;
+
+  if (user.role === ENUM_USER_ROLE.USER) {
+    const result = await prisma.addToCart.findMany({
+      where: {
+        userId: user.userId,
+      },
+      include: {
+        user: true,
+        service: true,
+      },
+    });
+    return result;
+  } else {
+    const result = await prisma.addToCart.findMany({
+      where: {},
+      include: {
+        user: true,
+        service: true,
+      },
+    });
+    return result;
+  }
 };
 
 const getAddToCart = async (id: string): Promise<AddToCart | null> => {

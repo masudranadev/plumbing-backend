@@ -8,7 +8,7 @@ import { AddToCartValidation } from './addToCart.validation';
 const router = Router();
 router.get(
   '/',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.USER,ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   AddToCartController.getAddToCarts
 );
 router.get(
@@ -18,7 +18,7 @@ router.get(
 );
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.USER),
+  auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.ADMIN),
   AddToCartController.deleteAddToCart
 );
 
