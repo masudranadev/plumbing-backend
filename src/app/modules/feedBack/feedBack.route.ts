@@ -17,6 +17,11 @@ router.get(
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   FeedBackController.getFeedBack
 );
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  FeedBackController.deleteFeedBack
+);
 
 router.post(
   '/create-feed-back',

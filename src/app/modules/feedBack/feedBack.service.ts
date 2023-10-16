@@ -22,7 +22,14 @@ const getFeedBacks = async (): Promise<FeedBack[]> => {
 };
 const getFeedBack = async (id: string): Promise<FeedBack | null> => {
   const result = await prisma.feedBack.findUnique({
-    where: {id},
+    where: { id },
+    include: { user: true, service: true },
+  });
+  return result;
+};
+const deleteFeedback = async (id: string): Promise<FeedBack | null> => {
+  const result = await prisma.feedBack.delete({
+    where: { id },
     include: { user: true, service: true },
   });
   return result;
@@ -31,5 +38,6 @@ const getFeedBack = async (id: string): Promise<FeedBack | null> => {
 export const FeedBackService = {
   insertIntoDB,
   getFeedBacks,
-  getFeedBack
+  getFeedBack,
+  deleteFeedback
 };

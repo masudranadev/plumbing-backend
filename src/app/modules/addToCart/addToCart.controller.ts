@@ -6,6 +6,7 @@ import httpStatus from "http-status";
 
 const insertIntoDB = catchAsync(async(req: Request, res: Response) => {
     const token = req.headers.authorization as string;
+    
     const result = await AddToCartService.insertIntoDB(req.body, token);
     sendResponse(res, {
         statusCode: httpStatus.OK,

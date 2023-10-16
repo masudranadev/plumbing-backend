@@ -16,14 +16,23 @@ const getFaq = async (id: string): Promise<FAQ | null> => {
   return result;
 };
 
+const updateFaq = async (
+  id: string,
+  payload: Partial<FAQ>
+): Promise<FAQ | null> => {
+  const result = await prisma.fAQ.update({ where: { id }, data: payload });
+  return result;
+};
+
 const deleteFaq = async (id: string): Promise<FAQ | null> => {
   const result = await prisma.fAQ.delete({ where: { id } });
   return result;
 };
 
 export const FaqService = {
-  insertIntoDB,
-  getFaqs,
   getFaq,
+  getFaqs,
   deleteFaq,
+  updateFaq,
+  insertIntoDB,
 };

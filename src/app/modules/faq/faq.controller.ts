@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
+import httpStatus from "http-status";
 import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import { FaqService } from "./faq.service";
-import httpStatus from "http-status";
 
 const insertIntoDB = catchAsync(async(req: Request,res: Response) => {
     const result = await FaqService.insertIntoDB(req.body);
@@ -31,6 +31,17 @@ const getFaq = catchAsync(async(req: Request,res: Response) => {
         data: result
     })
 })
+const updateFaq = catchAsync(async(req: Request,res: Response) => {
+    const {id} = req.params;
+    const data = req.body;
+    const result = await FaqService.updateFaq(id, data);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "faq updated successfully!",
+        data: result
+    })
+})
 const deleteFaq = catchAsync(async(req: Request,res: Response) => {
     const result = await FaqService.deleteFaq(req.params.id);
     sendResponse(res, {
@@ -42,8 +53,9 @@ const deleteFaq = catchAsync(async(req: Request,res: Response) => {
 })
 
 export const FaqController = {
-    insertIntoDB,
+    getFaq,
     getFaqs,
     deleteFaq,
-    getFaq
+    updateFaq,
+    insertIntoDB,
 }

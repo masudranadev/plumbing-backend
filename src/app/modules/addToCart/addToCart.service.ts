@@ -2,6 +2,7 @@ import { AddToCart } from '@prisma/client';
 import httpStatus from 'http-status';
 import { Secret } from 'jsonwebtoken';
 import config from '../../../config';
+import { ENUM_USER_ROLE } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import { prisma } from '../../../shared/prisma';
@@ -11,22 +12,23 @@ const insertIntoDB = async (
   token: string
 ): Promise<AddToCart> => {
   const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
-  console.log(user);
 
-  const isExist = await prisma.user.findFirst({
+  const isUserExist = await prisma.user.findFirst({
     where: {
       id: user.userId,
     },
   });
 
-  if (!isExist) {
+  if (!isUserExist && user?.role !== ENUM_USER_ROLE.USER) {
     throw new ApiError(httpStatus.NOT_FOUND, "user doesn't exist!");
   }
+
   if (!data.userId) {
     data.userId = user.userId;
   }
+
   const isExistAddToCart = await prisma.addToCart.findFirst({
-    where: { serviceId: data.serviceId },
+    where: { serviceId: data.serviceId, userId: user.userId },
   });
 
   if (isExistAddToCart) {
@@ -45,7 +47,6 @@ const insertIntoDB = async (
 
 const getAddToCarts = async (token: string): Promise<AddToCart[]> => {
   const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
-  console.log(user);
 
   const isExist = await prisma.user.findFirst({
     where: {
@@ -56,6 +57,7 @@ const getAddToCarts = async (token: string): Promise<AddToCart[]> => {
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, "user doesn't exist!");
   }
+  
   const result = await prisma.addToCart.findMany({
     where: {
       userId: user.userId,
