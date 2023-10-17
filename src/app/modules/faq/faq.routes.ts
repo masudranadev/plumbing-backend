@@ -8,7 +8,6 @@ import { FaqValidation } from './faq.validation';
 const router = Router();
 router.get(
   '/',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
   FaqController.getFaqs
 );
 router.get(

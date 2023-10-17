@@ -9,6 +9,7 @@ import { ProfileRoutes } from '../modules/profile/profile.routes';
 import { ReviewAndRatingRoutes } from '../modules/reviewAndRating/reviewAndRating.routes';
 import { ServiceRoutes } from '../modules/service/service.routes';
 import { UserRoutes } from '../modules/user/user.routes';
+import { AdminRoutes } from '../modules/admin/admin.routes';
 
 const router = express.Router();
 
@@ -53,6 +54,10 @@ const moduleRoutes = [
   {
     path: '/blogs',
     route: BlogRoutes,
+  },
+  {
+    path: '/admins',
+    route: AdminRoutes,
   },
 ];
 
