@@ -1,10 +1,7 @@
-export type IBookFilterRequest = {
-    search?: string;
+export type IServiceFilterRequest = {
+    searchTerm?: string;
     title?: string;
-    author?: string;
-    genre?: string;
-    publicationDate?: string;
-    categoryId?: string;
+    description?: string;
     minPrice?: string;
     maxPrice?: string
 }

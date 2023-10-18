@@ -46,9 +46,7 @@ const insertIntoDB = async (
 };
 
 const getAddToCarts = async (token: string): Promise<AddToCart[]> => {
-  const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
-  console.log(user);
-  
+  const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);  
 
   const isExist = await prisma.user.findFirst({
     where: {

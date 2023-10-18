@@ -1,12 +1,12 @@
 export const serviceFilterableFields = [
-  'search',
-  'title',
+  'searchTerm',
   'minPrice',
-  'maxPrice'
+  'maxPrice',
 ];
 
 export const serviceSearchableFields = [
   'title',
+  'description',
 ];
 
 export const serviceRelationalFields: string[] = ['category'];

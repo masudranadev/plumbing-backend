@@ -9,7 +9,7 @@ import {
   serviceRelationalFieldsMapper,
   serviceSearchableFields,
 } from './service.constants';
-import { IBookFilterRequest } from './service.interface';
+import { IServiceFilterRequest } from './service.interface';
 
 const insertIntoDB = async (data: Service): Promise<Service> => {
   const result = await prisma.service.create({
@@ -19,19 +19,19 @@ const insertIntoDB = async (data: Service): Promise<Service> => {
 };
 
 const getServices = async (
-  filters: IBookFilterRequest,
+  filters: IServiceFilterRequest,
   options: IPaginationOptions
 ): Promise<IGenericResponse<Service[]>> => {
   const { size, page, skip } = paginationHelpers.calculatePagination(options);
-  const { search, minPrice, maxPrice, ...filterData } = filters;
+  const { searchTerm, minPrice, maxPrice, ...filterData } = filters;
 
   const andConditions = [];
 
-  if (search) {
+  if (searchTerm) {
     andConditions.push({
       OR: serviceSearchableFields.map(field => ({
         [field]: {
-          contains: search,
+          contains: searchTerm,
           mode: 'insensitive',
         },
       })),
