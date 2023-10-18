@@ -8,6 +8,7 @@ import { ServiceValidation } from './service.validation';
 const router = Router();
 router.get('/', ServiceController.getServices);
 router.get('/:id', ServiceController.getServiceById);
+router.get('/category/:categoryId', ServiceController.getServiceByCategoryId);
 router.patch(
   '/:id',
   auth(ENUM_USER_ROLE.ADMIN),

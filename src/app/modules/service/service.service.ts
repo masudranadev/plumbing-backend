@@ -107,6 +107,16 @@ const getServices = async (
   };
 };
 
+const getServiceByCategoryId = async (
+  categoryId: string
+): Promise<Service[] | null> => {
+  const result = await prisma.service.findMany({
+    where: { categoryId },
+    include: { category: true },
+  });
+  return result;
+};
+
 const getServiceById = async (id: string): Promise<Service | null> => {
   const result = await prisma.service.findUnique({ where: { id } });
   return result;
@@ -140,4 +150,5 @@ export const Services = {
   getServiceById,
   updateServiceById,
   deleteServiceById,
+  getServiceByCategoryId,
 };

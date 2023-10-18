@@ -6,6 +6,7 @@ import ApiError from '../../../errors/ApiError';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
 
 import { Booking, Prisma } from '@prisma/client';
+import { ENUM_USER_ROLE } from '../../../enums/user';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -16,7 +17,6 @@ import {
   bookingSearchableFields,
 } from './booking.constants';
 import { IBookedFilterRequest } from './booking.interface';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 
 const insertIntoDB = async (token: string, data: Booking): Promise<Booking> => {
   const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
@@ -100,8 +100,13 @@ const getBookings = async (
   const whereConditions: Prisma.BookingWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
 
+  const getConditions =
+    user?.role === ENUM_USER_ROLE.USER
+      ? { userId: user?.userId }
+      : whereConditions;
+
   const result = await prisma.booking.findMany({
-    where: whereConditions,
+    where: getConditions,
     skip,
     take: size,
     orderBy:
@@ -134,10 +139,7 @@ const getBookings = async (
   };
 };
 
-const deleteBooking = async (
-  id: string,
-): Promise<Booking | null> => {
-
+const deleteBooking = async (id: string): Promise<Booking | null> => {
   const result = await prisma.booking.delete({
     where: { id },
     include: {
@@ -183,7 +185,10 @@ const updateBooking = async (
     throw new ApiError(httpStatus.NOT_FOUND, "service doesn't exist!");
   }
 
-  if (user.role === ENUM_USER_ROLE.ADMIN || user.role === ENUM_USER_ROLE.SUPER_ADMIN) {
+  if (
+    user.role === ENUM_USER_ROLE.ADMIN ||
+    user.role === ENUM_USER_ROLE.SUPER_ADMIN
+  ) {
     const result = await prisma.booking.update({
       where: {
         id,

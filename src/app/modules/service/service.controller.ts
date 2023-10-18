@@ -31,6 +31,18 @@ const getServices = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getServiceByCategoryId = catchAsync(
+  async (req: Request, res: Response) => {
+    const { categoryId } = req.params;
+    const result = await Services.getServiceByCategoryId(categoryId);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Services Fetched successfully',
+      data: result,
+    });
+  }
+);
 
 const getServiceById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -72,4 +84,5 @@ export const ServiceController = {
   getServiceById,
   updateServiceById,
   deleteServiceById,
+  getServiceByCategoryId,
 };
