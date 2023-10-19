@@ -41,18 +41,32 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const updatePassword = catchAsync(async (req: Request, res: Response) => {
+  const token = req.headers.authorization as string;
+  const data = req.body;
+  console.log({data, token});
+  
+  const result = await UserService.updatePassword(token, data);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Password updated successfully',
+    data: result,
+  });
+});
 
 const deleteUser = catchAsync(async (req: Request, res: Response) => {
-    const result = await UserService.deleteUser(req.params.id);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'user deleted successfully',
-      data: result,
-    });
+  const result = await UserService.deleteUser(req.params.id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'user deleted successfully',
+    data: result,
   });
+});
 
 export const UserController = {
+  updatePassword,
   updateUser,
   deleteUser,
   getUsers,

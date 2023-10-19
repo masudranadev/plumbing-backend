@@ -47,7 +47,35 @@ const signin = async (payload: ISigninData): Promise<ISigninResponse> => {
   };
 };
 
+const resetPassword = async (
+  payload: ISigninData
+): Promise<ISigninResponse> => {
+  const { email } = payload;
+
+  const isUserExist = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Email is Incorrect');
+  }
+
+  const { email: userEmail, role } = isUserExist;
+  const accessToken = jwtHelpers.createToken(
+    { userEmail, role },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  );
+
+  return {
+    accessToken,
+  };
+};
+
 export const AuthService = {
-  insertIntoDB,
   signin,
+  insertIntoDB,
+  resetPassword,
 };

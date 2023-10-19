@@ -18,8 +18,14 @@ const signin = z.object({
     password: z.string({ required_error: 'Password is Required!' }),
   }),
 });
+const reset = z.object({
+  body: z.object({
+    email: z.string({ required_error: 'Email is Required!' }).email(),
+  }),
+});
 
 export const AuthValidation = {
   create,
   signin,
+  reset,
 };

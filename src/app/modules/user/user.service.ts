@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Prisma, User } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import httpStatus from 'http-status';
+import { Secret } from 'jsonwebtoken';
+import config from '../../../config';
+import ApiError from '../../../errors/ApiError';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -90,6 +96,26 @@ const updateUser = async (
   return result;
 };
 
+const updatePassword = async (
+  token: string,
+  data: { password: string }
+): Promise<User | null> => {
+  const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'user not found!');
+  }
+  const hashPassword = await bcrypt.hash(data.password, 12);
+  data.password = hashPassword;
+  const result = await prisma.user.update({
+    where: {
+      email: user?.userEmail,
+    },
+    data,
+  });
+
+  return result;
+};
+
 const deleteUser = async (id: string): Promise<User | null> => {
   const result = await prisma.user.delete({
     where: { id },
@@ -101,6 +127,7 @@ const deleteUser = async (id: string): Promise<User | null> => {
 export const UserService = {
   updateUser,
   deleteUser,
+  updatePassword,
   getUsers,
   getUser,
 };
