@@ -118,7 +118,10 @@ const getServiceByCategoryId = async (
 };
 
 const getServiceById = async (id: string): Promise<Service | null> => {
-  const result = await prisma.service.findUnique({ where: { id } });
+  const result = await prisma.service.findUnique({
+    where: { id },
+    include: { category: true },
+  });
   return result;
 };
 

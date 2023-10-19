@@ -9,6 +9,7 @@ const router = Router();
 
 router.get('/', ReviewAndRatingController.getReviewAndRatings);
 router.get('/:id', ReviewAndRatingController.getReviewAndRating);
+router.get('/service/:id', ReviewAndRatingController.getReviewsByServieId);
 router.patch(
   '/:id',
   auth(ENUM_USER_ROLE.ADMIN),
@@ -23,8 +24,8 @@ router.delete(
 
 router.post(
   '/create-review',
-  validateRequest(ReviewAndRatingValidation.create),
   auth(ENUM_USER_ROLE.USER),
+  validateRequest(ReviewAndRatingValidation.create),
   ReviewAndRatingController.insertIntoDB
 );
 

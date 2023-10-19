@@ -8,7 +8,9 @@ import { reviewAndRatingFilterableFields } from './reviewAndRating.constants';
 import { ReviewAndRatingService } from './reviewAndRating.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReviewAndRatingService.insertIntoDB(req.body);
+  const token = req.headers.authorization as string;
+  const data = req.body;
+  const result = await ReviewAndRatingService.insertIntoDB(token, data);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -32,14 +34,24 @@ const getReviewAndRatings = catchAsync(async (req: Request, res: Response) => {
     data: result.data,
   });
 });
+
 const getReviewAndRating = catchAsync(async (req: Request, res: Response) => {
-  const result = await ReviewAndRatingService.deleteReviewAndRating(
-    req.params.id
-  );
+  const result = await ReviewAndRatingService.getReviewAndRating(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Review fetched successfully!',
+    data: result,
+  });
+});
+
+const getReviewsByServieId = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await ReviewAndRatingService.getReviewsByServieId(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Reviews fetched successfully!',
     data: result,
   });
 });
@@ -75,4 +87,5 @@ export const ReviewAndRatingController = {
   getReviewAndRatings,
   updateReviewAndRating,
   deleteReviewAndRating,
+  getReviewsByServieId,
 };

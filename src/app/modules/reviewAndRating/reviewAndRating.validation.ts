@@ -4,7 +4,7 @@ const create = z.object({
   body: z.object({
     review: z.string({ required_error: 'review is required' }),
     rating: z.number({ required_error: 'rating is required' }),
-    userId: z.string({ required_error: 'user Id is required' }),
+    userId: z.string({ required_error: 'user Id is required' }).optional(),
     serviceId: z.string({ required_error: 'servie id is required' }),
   }),
 });

@@ -1,4 +1,9 @@
 import { Prisma, ReviewAndRating } from '@prisma/client';
+import httpStatus from 'http-status';
+import { Secret } from 'jsonwebtoken';
+import config from '../../../config';
+import ApiError from '../../../errors/ApiError';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -7,8 +12,25 @@ import { reviewAndRatingSearchableFields } from './reviewAndRating.constants';
 import { IReviewAndRatingFilterRequest } from './reviewAndRating.interface';
 
 const insertIntoDB = async (
+  token: string,
   data: ReviewAndRating
 ): Promise<ReviewAndRating> => {
+  const user = jwtHelpers.verifyToken(token, config.jwt.secret as Secret);
+
+  const isExist = await prisma.user.findFirst({
+    where: {
+      id: user.userId,
+    },
+  });
+
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, "user doesn't exist!");
+  }
+
+  if (!data.userId) {
+    data.userId = user.userId;
+  }
+
   const result = await prisma.reviewAndRating.create({
     data,
     include: {
@@ -100,6 +122,20 @@ const getReviewAndRating = async (
   return result;
 };
 
+const getReviewsByServieId = async (
+  serviceId: string
+): Promise<ReviewAndRating[] | null> => {
+  const result = await prisma.reviewAndRating.findMany({
+    where: { serviceId },
+    include: {
+      user: true,
+      service: true,
+    },
+  });
+
+  return result;
+};
+
 const updateReviewAndRating = async (
   id: string,
   payload: Partial<ReviewAndRating>
@@ -136,4 +172,5 @@ export const ReviewAndRatingService = {
   getReviewAndRating,
   updateReviewAndRating,
   deleteReviewAndRating,
+  getReviewsByServieId,
 };
