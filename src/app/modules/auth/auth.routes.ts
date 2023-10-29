@@ -18,7 +18,7 @@ router.post(
 );
 
 router.post(
-  '/reset/password',
+  '/forgot/password',
   validateRequest(AuthValidation.reset),
   AuthController.resetPassword
 );

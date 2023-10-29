@@ -26,15 +26,12 @@ const signin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const resetPassword = catchAsync(async (req: Request, res: Response) => {
-  
   const result = await AuthService.resetPassword(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Email verified!',
-    data: {
-      token: result.accessToken,
-    },
+    data: result,
   });
 });
 

@@ -42,15 +42,15 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const updatePassword = catchAsync(async (req: Request, res: Response) => {
-  const token = req.headers.authorization as string;
+  const {id, token} = req.params;
   const data = req.body;
-  console.log({data, token});
+  console.log({id, data, token});
   
-  const result = await UserService.updatePassword(token, data);
+  const result = await UserService.updatePassword(id, token, data);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Password updated successfully',
+    message: 'Password reset successfully',
     data: result,
   });
 });

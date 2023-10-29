@@ -97,6 +97,7 @@ const updateUser = async (
 };
 
 const updatePassword = async (
+  id: string,
   token: string,
   data: { password: string }
 ): Promise<User | null> => {
@@ -108,6 +109,7 @@ const updatePassword = async (
   data.password = hashPassword;
   const result = await prisma.user.update({
     where: {
+      id,
       email: user?.userEmail,
     },
     data,

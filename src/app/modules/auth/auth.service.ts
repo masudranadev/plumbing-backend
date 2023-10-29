@@ -2,6 +2,8 @@ import { User } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import { Secret } from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
+// import smtpTransport from "nodemailer-smtp-transport";
 import config from '../../../config';
 import ApiError from '../../../errors/ApiError';
 import { jwtHelpers } from '../../../helpers/jwtHelpers';
@@ -49,10 +51,10 @@ const signin = async (payload: ISigninData): Promise<ISigninResponse> => {
 
 const resetPassword = async (
   payload: ISigninData
-): Promise<ISigninResponse> => {
+): Promise<{ message: string }> => {
   const { email } = payload;
 
-  const isUserExist = await prisma.user.findUnique({
+  const isUserExist = await prisma.user.findFirst({
     where: {
       email,
     },
@@ -62,15 +64,54 @@ const resetPassword = async (
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Email is Incorrect');
   }
 
-  const { email: userEmail, role } = isUserExist;
-  const accessToken = jwtHelpers.createToken(
+  const { email: userEmail, role, id } = isUserExist;
+  const token = jwtHelpers.createToken(
     { userEmail, role },
     config.jwt.secret as Secret,
-    config.jwt.expires_in as string
+    config.jwt.reset_expires_in as string
   );
+  const link = `https://plumbing-livid.vercel.app/${id}/${token}`;
+
+  const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: config.user_name,
+      pass: config.api_key,
+    },
+  });
+
+  transporter.sendMail({
+    from: config.sending_email,
+    to: email,
+    subject: 'Forgot password!',
+    html: `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Password Reset</title>
+      </head>
+      <body>
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Password Reset Request</h2>
+          <p>Hello ${isUserExist.fullName},</p>
+          <p>We received a request to reset your password for your 'plumbing' account. If you didn't make this request, you can safely ignore this email.</p>
+          <p>To reset your password, please click the following link:</p>
+          <a href="${link}" style="background-color: #007BFF; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a>
+          <p>If the link doesn't work, you can also copy and paste the following URL into your browser's address bar:</p>
+          <p><a href="${link}">${link}</a></p>
+          <p>This password reset link will expire in {only 5 minute}.</p>
+          <p>If you have any issues, please contact our support team at {example@gmail.com}.</p>
+          <p>Thank you,</p>
+          <p>The {plumbing} Team</p>
+        </div>
+      </body>
+    </html>
+    `,
+  });
 
   return {
-    accessToken,
+    message: 'Please check your email!',
   };
 };
 
